@@ -30,7 +30,7 @@ func main() {
 
 	for {
 		// 读取UDP连接上的数据
-		n, clientAddr, err := conn.ReadFromUDP(buffer)
+		n, _, err := conn.ReadFromUDP(buffer)
 		if err != nil {
 			fmt.Println("读取错误:", err)
 			return
@@ -41,11 +41,14 @@ func main() {
 		message2 := "q!"
 
 		// 判断是否收到关闭连接的消息
+		// 如果收到 'q!' 则结束循环，关闭连接
+		//if message == "q!"
 		if strings.EqualFold(message, message2) {
-			fmt.Println("客户端已关闭")
+			fmt.Println("客户端请求关闭连接.")
+			fmt.Println("客户端连接关闭")
 			break
 		} else {
-			fmt.Printf("从 %s 接收到消息: %s\n", clientAddr, message)
+			fmt.Printf("从客户端接收到消息: %s\n", message)
 		}
 	}
 }
