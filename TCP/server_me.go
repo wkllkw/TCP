@@ -26,13 +26,15 @@ func handleConnection(conn net.Conn) {
 
 		// 获取客户端发送的消息
 		message := scanner.Text()
-		fmt.Printf("接收到消息: %s\n", message)
 
 		// 如果收到 'q!' 则结束循环，关闭连接
 		if message == "q!" {
 			fmt.Println("客户端请求关闭连接.")
 			break
 		}
+
+		//输出接收到的消息
+		fmt.Printf("从客户端接收到消息: %s\n", message)
 
 		// 向客户端发送响应数据
 		response := "收到你的消息: " + message
@@ -46,7 +48,7 @@ func handleConnection(conn net.Conn) {
 
 func main() {
 	// 监听本地8080端口
-	listener, err := net.Listen("tcp", ":8080")
+	listener, err := net.Listen("tcp", "0.0.0.0:8080")
 	if err != nil {
 		fmt.Println("监听错误:", err)
 		return
@@ -54,7 +56,7 @@ func main() {
 	// 函数结束时关闭监听器
 	defer func() { _ = listener.Close() }()
 
-	fmt.Println("服务器监听在 :8080 端口")
+	fmt.Println("TCP服务器监听在 :8080 端口")
 
 	for {
 		// 接受客户端连接
