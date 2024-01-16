@@ -34,21 +34,19 @@ func main() {
 			return
 		}
 
-		fmt.Printf("向服务器发送消息: %s\n", input)
-
 		// 检查是否输入 'q!'，如果是则退出循环
 		if input == "q!" {
 			fmt.Println("退出客户端.")
 			break
 		}
 
+		fmt.Printf("向TCP服务器发送消息: %s\n", input)
+
 		// 读取服务器的响应
-		response, err := bufio.NewReader(conn).ReadString('\n')
+		_, err = bufio.NewReader(conn).ReadString('\n')
 		if err != nil {
 			fmt.Println("读取响应错误:", err)
 			return
 		}
-
-		fmt.Printf("从服务器接收到响应: %s", response)
 	}
 }
